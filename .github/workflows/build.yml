@@ -1,3 +1,4 @@
+
 name: Build Soul Morph Mod
 
 on:
@@ -20,12 +21,17 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Set up Gradle 8.7
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
       - name: Extract mod ZIP
         run: |
           mkdir extracted
           unzip -q *.zip -d extracted
 
-      - name: Find project and build
+      - name: Build Minecraft Mod
         run: |
           PROJECT_DIR=$(find extracted -name build.gradle -print -quit | xargs dirname)
           if [ -z "$PROJECT_DIR" ]; then
